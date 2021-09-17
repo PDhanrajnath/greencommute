@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-deploy
+  labels:
+    name: postgres-deploy
+    app: BC15-GC
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      name: postgres-pod
+      app: BC15-GC
+  template:
+    metadata:
+      name: postgres-pod
+      labels:
+        name: postgres-pod
+        app: BC15-GC
+    spec:
+      containers:
+        - name: postgres
+          image: dhanrajnath/postgres
+          ports:
+            - containerPort: 5432
+          env:
+            - name: "POSTGRES_USER"
+              value: "postgres"
+            - name: "POSTGRES_PASSWORD"
+              value: "1234" 
+            - name: "POSTGRES_DB"
+              value: "jobs"
